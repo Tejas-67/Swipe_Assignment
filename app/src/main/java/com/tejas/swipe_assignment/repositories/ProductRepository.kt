@@ -31,6 +31,10 @@ class ProductRepository(
         dao.clearProductTable()
     }
 
+    suspend fun search(query: String): List<ProductItem>{
+        return dao.searchProductTable(query)
+    }
+
     fun getProducts(
         fetchFromRemote: Boolean,
         onResponse: (Resource<ProductItemResponse>) -> Unit

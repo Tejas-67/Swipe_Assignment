@@ -7,51 +7,73 @@ import com.tejas.swipe_assignment.ProductScreenState
 import com.tejas.swipe_assignment.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.repositories.ProductRepository
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ProductViewModel(
     private val productRepository: ProductRepository
 ): ViewModel() {
 
-    private val _productScreenState = MutableLiveData<ProductScreenState>(ProductScreenState())
+    private val _productScreenState = MutableLiveData(ProductScreenState())
     val productScreenState get() = _productScreenState
+
+    var searchJob: Job? = null
 
     init{
         getProducts()
     }
 
+    fun search(
+        query: String
+    ){
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            delay(500)
+            val filteredList = productRepository.search(query)
+            _productScreenState.postValue(
+                _productScreenState.value!!.copy(
+                    data = filteredList
+                )
+            )
+        }
+    }
+
     fun getProducts(
         fetchFromRemote: Boolean = false
     ){
-        _productScreenState.postValue(
-            productScreenState.value!!.copy(
-                isLoading = true
+        viewModelScope.launch {
+            _productScreenState.postValue(
+                productScreenState.value!!.copy(
+                    isLoading = true
+                )
             )
-        )
-        productRepository.getProducts(fetchFromRemote = fetchFromRemote) {
-            when(it){
-                is Resource.Error -> {
-                    _productScreenState.postValue(
-                        productScreenState.value!!.copy(
-                            error = it.message!!,
-                            isLoading = false
+            delay(2000)
+            productRepository.getProducts(fetchFromRemote = fetchFromRemote) {
+                when(it){
+                    is Resource.Error -> {
+                        _productScreenState.postValue(
+                            productScreenState.value!!.copy(
+                                error = it.message!!,
+                                isLoading = false
+                            )
                         )
-                    )
-                }
-                is Resource.Success -> {
-                    viewModelScope.launch {
-                        productRepository.clearProductTable()
-                        productRepository.insertProduct(it.data as List<ProductItem>)
                     }
-                    _productScreenState.postValue(
-                        productScreenState.value!!.copy(
-                            isLoading = false,
-                            error = null,
-                            data = it.data as List<ProductItem>
+                    is Resource.Success -> {
+                        viewModelScope.launch {
+                            productRepository.clearProductTable()
+                            productRepository.insertProduct(it.data as List<ProductItem>)
+                        }
+                        _productScreenState.postValue(
+                            productScreenState.value!!.copy(
+                                isLoading = false,
+                                error = null,
+                                data = it.data as List<ProductItem>
+                            )
                         )
-                    )
+                    }
+                    else -> {}
                 }
-                else -> {}
             }
         }
     }
