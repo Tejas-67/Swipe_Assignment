@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".fragments.ProductFragment">
 
@@ -117,17 +118,18 @@
             app:layout_constraintTop_toTopOf="parent"
             android:indeterminateDrawable="@drawable/progress_bar"/>
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:layout_width="wrap_content"
-            app:icon="@drawable/ic_add"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="130dp"
-            android:layout_marginEnd="32dp"
-            android:text="Add Product"
-            android:id="@+id/add_product_fab"
-            android:layout_height="wrap_content"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        app:icon="@drawable/ic_add"
+        app:layout_anchor="@id/product_rcv"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Add Product"
+        android:id="@+id/add_product_fab"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

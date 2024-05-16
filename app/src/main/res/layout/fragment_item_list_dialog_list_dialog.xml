@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/white"
         tools:context=".fragments.ProductListDialogFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
@@ -157,9 +158,10 @@
                 app:cornerRadius="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:textAllCaps="false"
                 android:layout_marginTop="28dp"
                 android:text="Add Product"
-                android:layout_height="55dp"/>
+                android:layout_height="62dp"/>
                 <Space
                     app:layout_constraintTop_toBottomOf="@id/add_btn"
                     app:layout_constraintStart_toStartOf="parent"

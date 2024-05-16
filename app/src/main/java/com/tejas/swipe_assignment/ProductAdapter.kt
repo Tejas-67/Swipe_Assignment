@@ -21,7 +21,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
         private val taxTv: TextView = view.findViewById(R.id.tax_tv)
         private val typeTv: TextView= view.findViewById(R.id.type_tv)
         private val nameTv: TextView = view.findViewById(R.id.name_tv)
-        private val divider: View = view.findViewById(R.id.divider)
+//        private val divider: View = view.findViewById(R.id.divider)
 
         private val context: Context = view.context
         fun bind(item: ProductItem, removeDivider: Boolean){
@@ -35,7 +35,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
             nameTv.text = item.product_name.trimAndCapitalizeFirstChar()
             typeTv.text = item.product_type
 
-            if(removeDivider) divider.visibility = View.INVISIBLE
+//            if(removeDivider) divider.visibility = View.INVISIBLE
         }
     }
 
@@ -44,7 +44,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
             LayoutInflater.from(
                 parent.context
             )
-                .inflate(R.layout.product_item, null)
+                .inflate(R.layout.item_product, null)
         )
     }
 

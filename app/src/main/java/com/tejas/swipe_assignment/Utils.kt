@@ -1,8 +1,8 @@
 package com.tejas.swipe_assignment
 
-fun Float.toCurrencyNotation(): String = "₹$this"
+fun Float.toCurrencyNotation(): String = "Amount: ₹$this"
 
-fun Float.toTaxNotation(): String = "$this%"
+fun Float.toTaxNotation(): String = "Tax: $this%"
 
 fun String.trimAndCapitalizeFirstChar(): String {
     val trimmedString = this.trim()
