@@ -30,6 +30,8 @@ import com.tejas.swipe_assignment.databinding.FragmentItemListDialogListDialogBi
 import com.tejas.swipe_assignment.repositories.ProductRepository
 import com.tejas.swipe_assignment.room.ProductDatabase
 import com.tejas.swipe_assignment.ui.ProductViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.lang.NumberFormatException
 
@@ -39,7 +41,7 @@ class ProductListDialogFragment : BottomSheetDialogFragment() {
 
     private val IMAGE_REQUEST_CODE = 100
     private val image: MutableLiveData<Uri> = MutableLiveData()
-    private lateinit var viewModel: ProductViewModel
+    private val viewModel: ProductViewModel by viewModel<ProductViewModel>()
 
     private var selectedType: String? = null
 
@@ -64,11 +66,6 @@ class ProductListDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ProductViewModel(
-            ProductRepository(
-                ProductDatabase.getDatabase(requireContext())
-            )
-        )
         setupDropdown()
         addTextWatcherToTaxEditText()
         binding.addImageFab.setOnClickListener {

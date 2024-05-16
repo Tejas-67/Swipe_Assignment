@@ -20,13 +20,15 @@ import com.tejas.swipe_assignment.databinding.FragmentProductBinding
 import com.tejas.swipe_assignment.repositories.ProductRepository
 import com.tejas.swipe_assignment.room.ProductDatabase
 import com.tejas.swipe_assignment.ui.ProductViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductFragment : Fragment() {
-    private lateinit var productAdapter: ProductAdapter
+    private val productAdapter: ProductAdapter by inject()
     private var _binding: FragmentProductBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: ProductViewModel
-    private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
+    private val viewModel: ProductViewModel by viewModel<ProductViewModel>()
+    private val networkConnectionLiveData: NetworkConnectionLiveData by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,19 +41,19 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        networkConnectionLiveData = NetworkConnectionLiveData(
-            application = requireActivity().application
-        )
+//        networkConnectionLiveData = NetworkConnectionLiveData(
+//            application = requireActivity().application
+//        )
         setUpTextWatcher()
         networkConnectionLiveData.observe(viewLifecycleOwner, Observer {
             if(it) binding.internetStateIv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.internet_ok))
             else binding.internetStateIv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_internet_disconnected))
         })
-        viewModel = ProductViewModel(
-            ProductRepository(
-                ProductDatabase.getDatabase(requireContext())
-            )
-        )
+//        viewModel = ProductViewModel(
+//            ProductRepository(
+//                ProductDatabase.getDatabase(requireContext())
+//            )
+//        )
         viewModel.productScreenState.observe(viewLifecycleOwner, Observer {
             if(it.isLoading){
                 showProgressBar()
@@ -99,7 +101,6 @@ class ProductFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        productAdapter = ProductAdapter()
         binding.productRcv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = productAdapter

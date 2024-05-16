@@ -5,12 +5,8 @@ import com.tejas.swipe_assignment.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.datamodel.ProductItemResponse
 import com.tejas.swipe_assignment.datamodel.UploadResponse
-import com.tejas.swipe_assignment.network.RetrofitInstance
+import com.tejas.swipe_assignment.network.ProductAPI
 import com.tejas.swipe_assignment.room.ProductDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,10 +16,9 @@ import retrofit2.Response
 import java.io.File
 
 class ProductRepository(
-    private val db: ProductDatabase
+    private val db: ProductDatabase,
+    private val productAPI: ProductAPI
 ) {
-    private val productAPI = RetrofitInstance.productAPI
-
     val dao = db.getDao()
     private val _allProducts = dao.getAllProductsFromLocal()
     val allProducts get() = _allProducts
