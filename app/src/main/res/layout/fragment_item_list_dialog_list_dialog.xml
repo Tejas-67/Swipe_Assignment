@@ -41,6 +41,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_marginStart="12dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginTop="16dp"
                 app:boxBackgroundColor="#EDEDED"
@@ -53,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:id="@+id/product_name_edit"
                     android:imeOptions="actionNext"
+                    android:textStyle="bold"
                     android:maxLines="1"
                     android:inputType="text"
                     android:hint="Product name"
@@ -65,8 +70,12 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 app:boxBackgroundColor="#EDEDED"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:id="@+id/product_type_input"
                 app:layout_constraintTop_toBottomOf="@id/product_name_input"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,77 +84,69 @@
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:text="Product Type"
+                    android:textStyle="bold"
                     android:id="@+id/product_type_dropdown"
                     android:inputType="none"
                     android:layout_height="match_parent"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="16dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/product_type_input"
-                app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/selling_price_ll"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:gravity="center_vertical"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:orientation="horizontal">
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_rupee"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     app:boxBackgroundColor="#EDEDED"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="6dp"
+                    app:layout_constraintTop_toBottomOf="@id/product_type_input"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="12dp"
+                    android:id="@+id/price_input"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:startIconDrawable="@drawable/ic_rupee"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
                     android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:hint="Selling Price"
+                        android:id="@+id/price_edit"
                         android:imeOptions="actionNext"
+                        android:textStyle="bold"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="16dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/selling_price_ll"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:gravity="center_vertical"
-                android:id="@+id/tax_ll"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="12dp"
-                android:orientation="horizontal">
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_tax"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     app:boxBackgroundColor="#EDEDED"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="12dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="12dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/price_input"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    android:id="@+id/product_tax_input"
+                    app:startIconDrawable="@drawable/ic_tax"
                     android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:hint="Tax"
+                        android:id="@+id/product_tax_edit"
+                        android:textStyle="bold"
                         android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
                         android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/tax_ll"
+                app:layout_constraintTop_toBottomOf="@id/product_tax_input"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:id="@+id/add_btn"
@@ -153,10 +154,12 @@
                 app:backgroundTint="@color/blue"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:cornerRadius="4dp"
+                app:cornerRadius="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:layout_marginTop="28dp"
-                android:text="Add"
-                android:layout_height="50dp"/>
+                android:text="Add Product"
+                android:layout_height="55dp"/>
                 <Space
                     app:layout_constraintTop_toBottomOf="@id/add_btn"
                     app:layout_constraintStart_toStartOf="parent"

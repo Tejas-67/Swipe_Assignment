@@ -4,15 +4,20 @@ import android.util.Log
 import com.tejas.swipe_assignment.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.datamodel.ProductItemResponse
+import com.tejas.swipe_assignment.datamodel.UploadResponse
 import com.tejas.swipe_assignment.network.RetrofitInstance
 import com.tejas.swipe_assignment.room.ProductDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class ProductRepository(
     private val db: ProductDatabase
@@ -33,6 +38,36 @@ class ProductRepository(
 
     suspend fun search(query: String): List<ProductItem>{
         return dao.searchProductTable(query)
+    }
+
+    fun addProduct(
+        name: String,
+        tax: String,
+        amount: String,
+        type: String,
+        file: File?,
+        onResponse: (Boolean, ProductItem?) -> Unit
+    ){
+        val requestBody = if(file!=null) RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file) else null
+        val filePart = if(requestBody!=null) MultipartBody.Part.createFormData("files[]", file?.name, requestBody) else null
+
+        val productNameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
+        val taxBody = RequestBody.create("text/plain".toMediaTypeOrNull(), tax)
+        val amountBody = RequestBody.create("text/plain".toMediaTypeOrNull(), amount)
+        val typeBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
+        val call = productAPI.addProduct(productNameBody, taxBody, amountBody, typeBody, filePart)
+        Log.w("add-product", "here: ")
+        call.enqueue(object : Callback<UploadResponse> {
+            override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
+                val result = response.body()
+                onResponse(true, result!!.product_details)
+            }
+
+            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                Log.w("add-product", "fail: ${t.message}")
+                onResponse(false, null)
+            }
+        })
     }
 
     fun getProducts(

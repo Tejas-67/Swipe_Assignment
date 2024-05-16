@@ -10,6 +10,7 @@ import com.tejas.swipe_assignment.repositories.ProductRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 
 class ProductViewModel(
     private val productRepository: ProductRepository
@@ -19,11 +20,25 @@ class ProductViewModel(
     val productScreenState get() = _productScreenState
 
     var searchJob: Job? = null
+    val addProductResponse = MutableLiveData<Pair<Boolean, ProductItem?>>()
 
     init{
         getProducts()
     }
 
+
+    fun addProduct(
+        name: String,
+        type: String,
+        tax: String,
+        price: String,
+        file: File?
+    ){
+        productRepository.addProduct(name = name, type = type, tax = tax, amount = price, file = file){ success, product ->
+            val res = Pair(success, product)
+            addProductResponse.postValue(res)
+        }
+    }
     fun search(
         query: String
     ){
