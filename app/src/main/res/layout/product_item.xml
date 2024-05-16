@@ -8,15 +8,13 @@
         android:layout_width="match_parent"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        app:cardCornerRadius="0dp"
+        app:cardCornerRadius="12dp"
         app:strokeWidth="0dp"
+        android:layout_marginTop="4dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -26,7 +24,6 @@
                 android:src="@drawable/ic_launcher_background"
                 android:scaleType="centerCrop"
                 android:id="@+id/image"
-                app:shapeAppearanceOverlay="@style/ImageViewCornerRadius"
                 android:layout_height="180dp"/>
 
             <com.google.android.material.textview.MaterialTextView

@@ -3,7 +3,18 @@
     <style name="Base.Theme.Swipe_Assignment" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="Theme.Swipe_Assignment" parent="Base.Theme.Swipe_Assignment" />
+
+<!--    Style for Bottom Sheet-->
+    <style name="AppModalBottomSheetStyle" parent = "Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_shape</item>
+    </style>
+
+<!--    Theme for Bottom Sheet-->
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalBottomSheetStyle</item>
+    </style>
 </resources>

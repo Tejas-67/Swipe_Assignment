@@ -27,7 +27,7 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
         fun bind(item: ProductItem, removeDivider: Boolean){
             Glide.with(context)
                 .load(item.image)
-                .error(ContextCompat.getDrawable(context, R.drawable.ic_launcher_background))
+                .error(ContextCompat.getDrawable(context, R.drawable.no_image_placeholder))
                 .into(itemImage)
 
             priceTv.text = item.price.toCurrencyNotation()

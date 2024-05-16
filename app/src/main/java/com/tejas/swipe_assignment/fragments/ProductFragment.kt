@@ -66,7 +66,9 @@ class ProductFragment : Fragment() {
             }
         })
         binding.addProductFab.setOnClickListener {
-            findNavController().navigate(R.id.action_productFragment_to_addProductFragment)
+            val fragmentManager = requireActivity().supportFragmentManager
+            val bottomSheet = ProductListDialogFragment()
+            fragmentManager.let { bottomSheet.show(it, "bottom_sheet") }
         }
     }
 
