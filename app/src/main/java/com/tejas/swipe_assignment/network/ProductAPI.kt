@@ -22,6 +22,6 @@ interface ProductAPI  {
         @Part("product_type") type: RequestBody,
         @Part("price") price: RequestBody,
         @Part("tax") tax: RequestBody,
-        @Part files: MultipartBody.Part?
+        @Part files: List<MultipartBody.Part>
     ): Call<UploadResponse>
 }
