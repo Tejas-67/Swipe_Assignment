@@ -91,5 +91,5 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-navigation:3.2.0-beta-1")
     implementation("io.insert-koin:koin-androidx-compose:3.2.0-beta-1")
 
-
+    implementation("com.airbnb.android:lottie:3.7.2")
 }

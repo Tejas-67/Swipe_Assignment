@@ -1,4 +1,4 @@
-package com.tejas.swipe_assignment
+package com.tejas.swipe_assignment.ui
 
 import android.net.Uri
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
+import com.tejas.swipe_assignment.R
+import com.tejas.swipe_assignment.util.OnClickListener
 
 class SelectedImageAdapter(
     private val listener: OnClickListener

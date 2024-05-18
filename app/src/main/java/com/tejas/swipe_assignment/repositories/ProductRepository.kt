@@ -1,7 +1,7 @@
 package com.tejas.swipe_assignment.repositories
 
 import android.util.Log
-import com.tejas.swipe_assignment.Resource
+import com.tejas.swipe_assignment.util.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.datamodel.ProductItemResponse
 import com.tejas.swipe_assignment.datamodel.UploadResponse
@@ -52,7 +52,7 @@ class ProductRepository(
         val taxBody = RequestBody.create("text/plain".toMediaTypeOrNull(), tax)
         val amountBody = RequestBody.create("text/plain".toMediaTypeOrNull(), amount)
         val typeBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
-        val call = productAPI.addProduct(productNameBody, taxBody, amountBody, typeBody, fileParts)
+        val call = productAPI.addProduct(name = productNameBody, tax = taxBody, price = amountBody, type = typeBody, files = fileParts)
 
         call.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {

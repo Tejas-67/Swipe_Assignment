@@ -3,8 +3,7 @@ package com.tejas.swipe_assignment.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tejas.swipe_assignment.ProductScreenState
-import com.tejas.swipe_assignment.Resource
+import com.tejas.swipe_assignment.util.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.repositories.ProductRepository
 import kotlinx.coroutines.Job

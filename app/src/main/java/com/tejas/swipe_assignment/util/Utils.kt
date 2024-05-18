@@ -1,4 +1,4 @@
-package com.tejas.swipe_assignment
+package com.tejas.swipe_assignment.util
 
 fun Float.toCurrencyNotation(): String = "Amount: ₹$this"
 

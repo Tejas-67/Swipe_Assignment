@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.tejas.swipe_assignment.NetworkConnectionLiveData
+import com.tejas.swipe_assignment.util.NetworkConnectionLiveData
 import com.tejas.swipe_assignment.R
 
 class MainActivity : AppCompatActivity() {

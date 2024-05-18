@@ -1,9 +1,17 @@
 package com.tejas.swipe_assignment.fragments
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -14,17 +22,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.lifecycle.MutableLiveData
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.tejas.swipe_assignment.OnClickListener
+import com.tejas.swipe_assignment.util.OnClickListener
 import com.tejas.swipe_assignment.R
-import com.tejas.swipe_assignment.SelectedImageAdapter
+import com.tejas.swipe_assignment.activities.MainActivity
+import com.tejas.swipe_assignment.ui.SelectedImageAdapter
 import com.tejas.swipe_assignment.databinding.FragmentItemListDialogListDialogBinding
 import com.tejas.swipe_assignment.ui.ProductViewModel
+import com.tejas.swipe_assignment.util.NotificationHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.lang.NumberFormatException
@@ -34,7 +47,6 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
     private val binding get() = _binding!!
 
     private val IMAGE_REQUEST_CODE = 100
-    private val image: MutableLiveData<Uri> = MutableLiveData()
     private val viewModel: ProductViewModel by viewModel<ProductViewModel>()
     private lateinit var selectedImageAdapter: SelectedImageAdapter
 
@@ -57,7 +69,6 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return BottomSheetDialog(requireContext(), theme).apply {
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            behavior.peekHeight = resources.displayMetrics.heightPixels
         }
     }
 
@@ -78,22 +89,22 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
         }
         viewModel.addProductResponse.observe(viewLifecycleOwner, Observer {
             Log.w("add-Product", "here: $it")
+            hideProgressBar()
             if(it.first){
-                showSnackbar("Success ${it.second}")
+               showDialog(success = true)
+                showNotification(requireContext(), name = it.second!!.product_name, success = true)
             }else{
-                showSnackbar("Failed")
+                showDialog(success = false)
+                showNotification(requireContext(), success = true)
+
             }
         })
-    }
-
-    private fun showSnackbar(message: String){
-        Snackbar.make(binding.addBtn, message, 2000).show()
     }
     private fun uploadData() {
         val productName = binding.nameEdit.text.toString()
         var allGood = true
         if(productName.isEmpty()){
-            binding.nameEdit.error = "Enter product Name"
+            binding.nameInput.error = "Enter product Name"
             allGood = false
         }
         if(selectedType.isNullOrEmpty()){
@@ -124,6 +135,7 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
         tax: String,
         amount: String
     ){
+        showProgressBar()
         val filesList = arrayListOf<File>()
         list.forEach {
             uriToFile(it)?.let{
@@ -133,6 +145,15 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
         viewModel.addProduct(name = productName, tax = tax, price = amount, type = selectedType!!, files = filesList)
     }
 
+    private fun showProgressBar(){
+        binding.addBtn.visibility = View.GONE
+        binding.progessBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar(){
+        binding.addBtn.visibility = View.VISIBLE
+        binding.progessBar.visibility = View.GONE
+    }
     private fun addTextWatcherToTaxEditText() {
         binding.taxEdit.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -158,8 +179,77 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
             }
         })
     }
+    private fun showDialog(success: Boolean){
+        val builder = AlertDialog.Builder(requireContext())
+        if(success){
+            builder.setTitle("Success!")
+            builder.setMessage("Product added successfully")
+        }else{
+            builder.setTitle("Failure!")
+            builder.setMessage("Something went wrong while adding the product.")
+        }
+        builder.setPositiveButton("Ok"){dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun showNotification(context: Context, name: String = "", success: Boolean){
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            1,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        createNotificationChannel(context)
 
+        val title = if(success) "Product added successfully"
+        else "Failed to add product"
+        val message = if(success) "$name added"
+        else "Product couldn't be added"
+
+        val builder = NotificationCompat.Builder(context,
+            NotificationHelper.NOTIFICATION_CHANNEL_ID
+        )
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.ic_tax)
+
+        with(NotificationManagerCompat.from(context)) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                notify(0, builder.build())
+            }else{
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.POST_NOTIFICATIONS), 100)
+                return@with
+            }
+        }
+    }
+
+    private fun createNotificationChannel(context: Context){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(
+                NotificationHelper.NOTIFICATION_CHANNEL_ID,
+                NotificationHelper.NOTIFICATION_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.enableVibration(true)
+            val manager = context.getSystemService(
+                NotificationManager::class.java
+            )
+            manager.createNotificationChannel(channel)
+        }
+    }
     private fun openGallery() {
         val intent = Intent()
         intent.type = "image/*"
@@ -203,7 +293,6 @@ class ProductListDialogFragment : BottomSheetDialogFragment(), OnClickListener {
 
     override fun onClick(position: Int) {
         list.removeAt(position)
-        //update adapter
         selectedImageAdapter.updateList(list)
     }
 }

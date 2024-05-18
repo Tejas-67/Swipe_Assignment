@@ -1,4 +1,4 @@
-package com.tejas.swipe_assignment
+package com.tejas.swipe_assignment.util
 
 sealed class Resource<T>(data: T? = null, message: String? = null) {
     class Success<T>(val data: T?): Resource<T>(data, null)

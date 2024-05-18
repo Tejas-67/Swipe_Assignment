@@ -1,4 +1,4 @@
-package com.tejas.swipe_assignment
+package com.tejas.swipe_assignment.util
 
 import android.app.Application
 import android.content.Context
