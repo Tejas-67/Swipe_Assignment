@@ -3,8 +3,7 @@ package com.tejas.swipe_assignment.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tejas.swipe_assignment.ProductScreenState
-import com.tejas.swipe_assignment.Resource
+import com.tejas.swipe_assignment.util.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.repositories.ProductRepository
 import kotlinx.coroutines.Job
@@ -25,20 +24,19 @@ class ProductViewModel(
     init{
         getProducts()
     }
-
-
     fun addProduct(
         name: String,
         type: String,
         tax: String,
         price: String,
-        file: File?
-    ){
-        productRepository.addProduct(name = name, type = type, tax = tax, amount = price, file = file){ success, product ->
+        files: List<File>?
+    ) {
+        productRepository.addProduct(name = name, type = type, tax = tax, amount = price, files = files) { success, product ->
             val res = Pair(success, product)
             addProductResponse.postValue(res)
         }
     }
+
     fun search(
         query: String
     ){

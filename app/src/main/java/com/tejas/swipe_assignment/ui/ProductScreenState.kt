@@ -1,4 +1,4 @@
-package com.tejas.swipe_assignment
+package com.tejas.swipe_assignment.ui
 
 import com.tejas.swipe_assignment.datamodel.ProductItem
 

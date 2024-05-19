@@ -10,15 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.tejas.swipe_assignment.NetworkConnectionLiveData
-import com.tejas.swipe_assignment.ProductAdapter
+import com.tejas.swipe_assignment.util.NetworkConnectionLiveData
+import com.tejas.swipe_assignment.ui.ProductAdapter
 import com.tejas.swipe_assignment.R
 import com.tejas.swipe_assignment.databinding.FragmentProductBinding
-import com.tejas.swipe_assignment.repositories.ProductRepository
-import com.tejas.swipe_assignment.room.ProductDatabase
 import com.tejas.swipe_assignment.ui.ProductViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,19 +38,11 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-//        networkConnectionLiveData = NetworkConnectionLiveData(
-//            application = requireActivity().application
-//        )
         setUpTextWatcher()
         networkConnectionLiveData.observe(viewLifecycleOwner, Observer {
             if(it) binding.internetStateIv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.internet_ok))
             else binding.internetStateIv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_internet_disconnected))
         })
-//        viewModel = ProductViewModel(
-//            ProductRepository(
-//                ProductDatabase.getDatabase(requireContext())
-//            )
-//        )
         viewModel.productScreenState.observe(viewLifecycleOwner, Observer {
             if(it.isLoading){
                 showProgressBar()

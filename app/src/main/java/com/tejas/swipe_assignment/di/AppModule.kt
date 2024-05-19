@@ -1,8 +1,8 @@
 package com.tejas.swipe_assignment.di
 
 import android.app.Application
-import com.tejas.swipe_assignment.NetworkConnectionLiveData
-import com.tejas.swipe_assignment.ProductAdapter
+import com.tejas.swipe_assignment.util.NetworkConnectionLiveData
+import com.tejas.swipe_assignment.ui.ProductAdapter
 import com.tejas.swipe_assignment.network.ProductAPI
 import com.tejas.swipe_assignment.repositories.ProductRepository
 import com.tejas.swipe_assignment.room.ProductDatabase

@@ -1,7 +1,7 @@
 package com.tejas.swipe_assignment.repositories
 
 import android.util.Log
-import com.tejas.swipe_assignment.Resource
+import com.tejas.swipe_assignment.util.Resource
 import com.tejas.swipe_assignment.datamodel.ProductItem
 import com.tejas.swipe_assignment.datamodel.ProductItemResponse
 import com.tejas.swipe_assignment.datamodel.UploadResponse
@@ -40,30 +40,32 @@ class ProductRepository(
         tax: String,
         amount: String,
         type: String,
-        file: File?,
+        files: List<File>?,
         onResponse: (Boolean, ProductItem?) -> Unit
-    ){
-        val requestBody = if(file!=null) RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file) else null
-        val filePart = if(requestBody!=null) MultipartBody.Part.createFormData("files[]", file?.name, requestBody) else null
+    ) {
+        val fileParts = files?.map { file ->
+            val requestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+            MultipartBody.Part.createFormData("files[]", file.name, requestBody)
+        } ?: emptyList()
 
         val productNameBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
         val taxBody = RequestBody.create("text/plain".toMediaTypeOrNull(), tax)
         val amountBody = RequestBody.create("text/plain".toMediaTypeOrNull(), amount)
         val typeBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
-        val call = productAPI.addProduct(productNameBody, taxBody, amountBody, typeBody, filePart)
-        Log.w("add-product", "here: ")
+        val call = productAPI.addProduct(name = productNameBody, tax = taxBody, price = amountBody, type = typeBody, files = fileParts)
+
         call.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>, response: Response<UploadResponse>) {
                 val result = response.body()
-                onResponse(true, result!!.product_details)
+                onResponse(true, result?.product_details)
             }
 
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
-                Log.w("add-product", "fail: ${t.message}")
                 onResponse(false, null)
             }
         })
     }
+
 
     fun getProducts(
         fetchFromRemote: Boolean,

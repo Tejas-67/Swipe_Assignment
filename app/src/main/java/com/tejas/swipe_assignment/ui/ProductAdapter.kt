@@ -1,4 +1,4 @@
-package com.tejas.swipe_assignment
+package com.tejas.swipe_assignment.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
+import com.tejas.swipe_assignment.R
 import com.tejas.swipe_assignment.datamodel.ProductItem
+import com.tejas.swipe_assignment.util.toCurrencyNotation
+import com.tejas.swipe_assignment.util.toTaxNotation
+import com.tejas.swipe_assignment.util.trimAndCapitalizeFirstChar
 
 class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 

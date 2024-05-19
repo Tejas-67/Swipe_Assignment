@@ -7,4 +7,7 @@
     <color name="red">#C10E0E</color>
     <color name="blue">#1560BD</color>
 
+    <color name="card_color_dark">#242222</color>
+    <color name="bg_color_dark">@color/black</color>
+
 </resources>
