@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/white"
+        style="@style/backGroundStyle"
         tools:context=".fragments.ProductListDialogFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
@@ -19,7 +19,7 @@
         android:text="Add Product"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        style="@style/textViewStyle"
         android:layout_height="wrap_content"/>
 
     <com.google.android.material.textview.MaterialTextView
@@ -33,7 +33,7 @@
         android:text="Select images"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        style="@style/textViewStyle"
         android:layout_height="wrap_content"/>
 
     <HorizontalScrollView
@@ -52,7 +52,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="120dp"
                 app:strokeWidth="2dp"
-                app:cardBackgroundColor="#EDEDED"
+                style="@style/cardBackGroundStyle"
                 android:id="@+id/select_image_card"
                 app:strokeColor="@color/blue"
                 android:layout_height="120dp">
@@ -84,7 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hsv"
-        android:textColor="@color/black"
+        style="@style/textViewStyle"
         android:textStyle="bold"
         android:id="@+id/product_name"
         android:layout_marginStart="16dp"
@@ -108,7 +108,7 @@
         app:boxCornerRadiusBottomEnd="12dp"
         android:elevation="32dp"
         android:id="@+id/name_input"
-        app:boxBackgroundColor="#EDEDED"
+        style="@style/TextInput"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_height="wrap_content">
@@ -117,7 +117,7 @@
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             android:id="@+id/name_edit"
-            android:textColor="@color/black"
+            style="@style/TextEditStyle"
             android:hint="eg: Google Pixel 9"
             android:inputType="text"
             android:maxLines="1"
@@ -134,7 +134,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_input"
-        android:textColor="@color/black"
+        style="@style/textViewStyle"
         android:textStyle="bold"
         android:id="@+id/product_type"
         android:layout_marginStart="16dp"
@@ -145,7 +145,6 @@
         android:layout_width="match_parent"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        app:boxBackgroundColor="#EDEDED"
         app:boxCornerRadiusTopStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
@@ -172,7 +171,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/type_input"
-        android:textColor="@color/black"
+        style="@style/textViewStyle"
         android:textStyle="bold"
         android:id="@+id/product_amount"
         android:layout_marginStart="16dp"
@@ -196,7 +195,7 @@
         app:boxCornerRadiusBottomEnd="12dp"
         android:elevation="32dp"
         android:id="@+id/amount_input"
-        app:boxBackgroundColor="#EDEDED"
+        style="@style/TextInput"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_height="wrap_content">
@@ -205,7 +204,7 @@
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             android:id="@+id/amount_edit"
-            android:textColor="@color/black"
+            style="@style/TextEditStyle"
             android:drawableStart="@drawable/ic_rupee"
             android:inputType="numberDecimal"
             android:maxLines="1"
@@ -223,7 +222,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/amount_input"
-        android:textColor="@color/black"
+        style="@style/textViewStyle"
         android:textStyle="bold"
         android:id="@+id/product_tax"
         android:layout_marginStart="16dp"
@@ -247,7 +246,7 @@
         app:boxCornerRadiusBottomEnd="12dp"
         android:elevation="32dp"
         android:id="@+id/tax_input"
-        app:boxBackgroundColor="#EDEDED"
+        style="@style/TextInput"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_height="wrap_content">
@@ -256,7 +255,7 @@
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             android:id="@+id/tax_edit"
-            android:textColor="@color/black"
+            style="@style/TextEditStyle"
             android:drawableStart="@drawable/ic_tax"
             android:inputType="numberDecimal"
             android:maxLines="1"
